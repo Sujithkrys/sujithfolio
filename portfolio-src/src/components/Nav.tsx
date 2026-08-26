@@ -8,7 +8,6 @@ const tabs = [
   { to: '/about', label: 'about.tsx' },
   { to: '/projects', label: 'projects.tsx' },
   { to: '/skills', label: 'skills.tsx' },
-  { to: '/gallery', label: 'gallery.tsx' },
 ]
 
 export default function Nav() {

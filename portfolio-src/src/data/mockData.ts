@@ -132,9 +132,12 @@ export const projects = [
 
 export const projectCategories = ['All', 'Healthcare AI', 'Developer Tools', 'AI Tools', 'Utility', 'Games']
 
-export const gallery = [
-  { id: 1, caption: 'Whiteboard session — sketching the Triage Copilot data model' },
-  { id: 2, caption: 'Desk setup, mid-refactor' },
-  { id: 3, caption: 'First working sync test for Fieldnote, offline to online' },
-  { id: 4, caption: 'Debugging Gridwatch on a train, of course' },
-]
+// Self-reported summary stats for the hero panel — plain facts, not a
+// live data feed. Keep it that way: don't dress this up as pulled-from-an-API.
+export const stats = {
+  projects_shipped: projects.length,
+  years_writing_code: 3,
+  focus: ['Healthcare AI', 'Developer Tools'],
+  currently: 'Triage Copilot v2',
+  based_in: 'Bengaluru, IN',
+}

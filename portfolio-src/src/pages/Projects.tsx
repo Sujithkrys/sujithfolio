@@ -50,7 +50,7 @@ export default function Projects() {
             onClick={() => setCategory(c)}
             className={`font-mono text-[12px] uppercase tracking-wide px-3.5 py-2 rounded-sm border transition-colors ${
               category === c
-                ? 'bg-ink text-bg border-ink'
+                ? 'bg-string/10 text-string border-string'
                 : 'border-border text-faint hover:border-keyword hover:text-keyword'
             }`}
           >

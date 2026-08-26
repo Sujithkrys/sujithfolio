@@ -1,10 +1,31 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { profile, education, skillGroups } from '../data/mockData'
 import Eyebrow from '../components/Eyebrow'
 import LineGutter from '../components/LineGutter'
 
 export default function About() {
-  const bioLines = profile.bioLong.match(/.{1,70}(\s|$)/g) || [profile.bioLong]
+  // Measure the actual rendered paragraph instead of guessing line count
+  // from character length — a guess drifts out of sync the moment the
+  // text, font size, or viewport width changes; a measurement can't.
+  const bioRef = useRef<HTMLDivElement>(null)
+  const [lineCount, setLineCount] = useState(10)
+  const [lineHeightPx, setLineHeightPx] = useState(0)
+
+  useLayoutEffect(() => {
+    function measure() {
+      const el = bioRef.current
+      if (!el) return
+      const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight)
+      if (lineHeight > 0) {
+        setLineHeightPx(lineHeight)
+        setLineCount(Math.max(1, Math.round(el.clientHeight / lineHeight)))
+      }
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
 
   return (
     <div className="max-w-7xl mx-auto px-5 md:px-8 pt-16 pb-28">
@@ -17,10 +38,13 @@ export default function About() {
       </motion.div>
 
       <div className="grid lg:grid-cols-[auto_1fr] gap-x-2 mt-20">
-        <LineGutter count={bioLines.length + 2} className="pt-1" />
+        <LineGutter count={lineCount} lineHeightPx={lineHeightPx} className="pt-1" />
         <div>
           <Eyebrow>Who I am</Eyebrow>
-          <div className="font-body text-lg md:text-[1.35rem] leading-[1.9] text-ink/90 max-w-3xl">
+          <div
+            ref={bioRef}
+            className="font-body text-lg md:text-[1.35rem] leading-[1.9] text-ink/90 max-w-3xl"
+          >
             {profile.bioLong}
           </div>
         </div>

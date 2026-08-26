@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import { profile, projects } from '../data/mockData'
+import { profile, projects, stats } from '../data/mockData'
 import Eyebrow from '../components/Eyebrow'
 
 function useTypewriter(text: string, speed = 42, startDelay = 300) {
@@ -43,6 +43,7 @@ export default function Home() {
     <div>
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-5 md:px-8 pt-20 md:pt-28 pb-24">
+        <div className="grid lg:grid-cols-[1fr_320px] gap-5 items-start">
         <div className="rounded-md border border-border bg-surface overflow-hidden">
           {/* fake editor titlebar */}
           <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-surface2">
@@ -52,7 +53,7 @@ export default function Home() {
             <span className="ml-3 font-mono text-[12px] text-faint">whoami.ts</span>
           </div>
 
-          <div className="p-6 md:p-12 lg:p-16">
+          <div className="p-6 md:p-10 lg:p-12">
             <p className="font-mono text-[13px] text-faint mb-6">
               <span className="text-success">01</span> // loading profile
             </p>
@@ -117,6 +118,60 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
+        </div>
+
+        {/* stats.json — second pane, fills the space a single-column hero would waste */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="rounded-md border border-border bg-surface overflow-hidden self-stretch flex flex-col"
+        >
+          <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-surface2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#5C6370]/40" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#5C6370]/40" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#5C6370]/40" />
+            <span className="ml-3 font-mono text-[12px] text-faint">stats.json</span>
+          </div>
+          <div className="p-5 font-mono text-[13px] leading-[1.9] flex-1">
+            <div className="text-faint">{'{'}</div>
+            <div className="pl-4">
+              <span className="text-keyword">"projects_shipped"</span>
+              <span className="text-faint">: </span>
+              <span className="text-string">{stats.projects_shipped}</span>
+              <span className="text-faint">,</span>
+            </div>
+            <div className="pl-4">
+              <span className="text-keyword">"years_writing_code"</span>
+              <span className="text-faint">: </span>
+              <span className="text-string">{stats.years_writing_code}</span>
+              <span className="text-faint">,</span>
+            </div>
+            <div className="pl-4">
+              <span className="text-keyword">"focus"</span>
+              <span className="text-faint">: [</span>
+            </div>
+            {stats.focus.map((f, i) => (
+              <div key={f} className="pl-8">
+                <span className="text-string">"{f}"</span>
+                <span className="text-faint">{i < stats.focus.length - 1 ? ',' : ''}</span>
+              </div>
+            ))}
+            <div className="pl-4 text-faint">],</div>
+            <div className="pl-4">
+              <span className="text-keyword">"currently"</span>
+              <span className="text-faint">: </span>
+              <span className="text-string">"{stats.currently}"</span>
+              <span className="text-faint">,</span>
+            </div>
+            <div className="pl-4">
+              <span className="text-keyword">"based_in"</span>
+              <span className="text-faint">: </span>
+              <span className="text-string">"{stats.based_in}"</span>
+            </div>
+            <div className="text-faint">{'}'}</div>
+          </div>
+        </motion.div>
         </div>
       </section>
 
