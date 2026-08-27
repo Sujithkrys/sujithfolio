@@ -1,122 +1,165 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { Search, User, Check } from 'lucide-react'
 
-// Each scene is deliberately abstract — no real app logos, no fabricated
-// timestamps. The point is to gesture at a workflow, not fake telemetry
-// about one.
+// One consistent character (circle head, capsule torso, bar limbs — no
+// face, no detail) recurs across every scene so it reads as one person's
+// day, not four disconnected icons. Kept deliberately plain: flat shapes,
+// site's existing accent palette only, no attempt at realism.
 
-function SceneResearch() {
+const VB = '0 0 200 140'
+
+function Desk({
+  reducedMotion,
+  screen,
+}: {
+  reducedMotion: boolean | null
+  screen: React.ReactNode
+}) {
   return (
-    <div className="w-48">
-      <div className="rounded-md border border-border/70 bg-surface2 p-4">
-        <div className="flex items-center gap-1.5 mb-3">
-          <span className="h-1.5 w-1.5 rounded-full bg-faint/50" />
-          <div className="h-1.5 flex-1 rounded-full bg-faint/15" />
-        </div>
-        <div className="space-y-2">
-          <motion.div
-            className="h-2 rounded bg-keyword/30"
-            animate={{ opacity: [0.35, 1, 0.35] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
+    <svg viewBox={VB} className="w-full max-w-[240px] h-auto">
+      <line x1="20" y1="112" x2="180" y2="112" className="stroke-border" strokeWidth={1.5} />
+
+      <rect x="80" y="44" width="40" height="46" rx="14" className="fill-string/85" />
+      <circle cx="100" cy="34" r="13" className="fill-ink/90" />
+
+      <rect x="72" y="56" width="56" height="48" rx="5" className="fill-surface2 stroke-border" strokeWidth={1.5} />
+      {screen}
+      <rect x="82" y="104" width="36" height="7" rx="2" className="fill-surface2 stroke-border" strokeWidth={1} />
+
+      <motion.rect
+        x="88" y="98" width="6" height="8" rx="2" className="fill-ink/70"
+        animate={reducedMotion ? undefined : { y: [98, 101, 98] }}
+        transition={{ duration: 0.7, repeat: Infinity }}
+      />
+      <motion.rect
+        x="106" y="98" width="6" height="8" rx="2" className="fill-ink/70"
+        animate={reducedMotion ? undefined : { y: [101, 98, 101] }}
+        transition={{ duration: 0.7, repeat: Infinity }}
+      />
+    </svg>
+  )
+}
+
+function SceneResearch({ reducedMotion }: { reducedMotion: boolean | null }) {
+  const lines = [
+    { y: 68, w: 34, delay: 0 },
+    { y: 76, w: 28, delay: 0.2 },
+    { y: 84, w: 22, delay: 0.4 },
+  ]
+  return (
+    <Desk
+      reducedMotion={reducedMotion}
+      screen={
+        <>
+          {lines.map((l) => (
+            <motion.rect
+              key={l.y}
+              x="82" y={l.y} width={l.w} height={3} rx={1.5}
+              className="fill-keyword/50"
+              animate={reducedMotion ? undefined : { opacity: [0.35, 1, 0.35] }}
+              transition={{ duration: 1.8, repeat: Infinity, delay: l.delay }}
+            />
+          ))}
+        </>
+      }
+    />
+  )
+}
+
+function SceneClientCall({ reducedMotion }: { reducedMotion: boolean | null }) {
+  return (
+    <Desk
+      reducedMotion={reducedMotion}
+      screen={
+        <>
+          <circle cx="100" cy="80" r="11" className="fill-faint/50" />
+          <motion.circle
+            cx="100" cy="80" r="11" fill="none" className="stroke-success" strokeWidth={2}
+            animate={reducedMotion ? undefined : { opacity: [0.3, 0.9, 0.3], scale: [1, 1.08, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
           />
-          <motion.div
-            className="h-2 rounded bg-faint/20 w-4/5"
-            animate={{ opacity: [0.35, 1, 0.35] }}
-            transition={{ duration: 1.8, repeat: Infinity, delay: 0.25 }}
+          <motion.circle
+            cx="83" cy="63" r="2.5" className="fill-success"
+            animate={reducedMotion ? undefined : { opacity: [1, 0.2, 1] }}
+            transition={{ duration: 1, repeat: Infinity }}
           />
-          <motion.div
-            className="h-2 rounded bg-faint/20 w-3/5"
-            animate={{ opacity: [0.35, 1, 0.35] }}
-            transition={{ duration: 1.8, repeat: Infinity, delay: 0.5 }}
-          />
-        </div>
-      </div>
-      <motion.div
-        className="flex justify-end -mt-3.5 mr-3"
-        animate={{ y: [0, -3, 0] }}
+        </>
+      }
+    />
+  )
+}
+
+function SceneTeamSync({ reducedMotion }: { reducedMotion: boolean | null }) {
+  return (
+    <svg viewBox={VB} className="w-full max-w-[240px] h-auto">
+      <rect x="20" y="18" width="72" height="50" rx="4" className="fill-surface2 stroke-border" strokeWidth={1.5} />
+      <rect x="30" y="30" width="30" height="3" rx="1.5" className="fill-keyword/50" />
+      <rect x="30" y="40" width="42" height="3" rx="1.5" className="fill-string/50" />
+      <rect x="30" y="50" width="24" height="3" rx="1.5" className="fill-faint/50" />
+
+      <rect x="20" y="98" width="160" height="8" rx="4" className="fill-border/50" />
+
+      <circle cx="55" cy="80" r="8" className="fill-faint/60" />
+      <rect x="45" y="88" width="20" height="20" rx="8" className="fill-faint/25" />
+      <motion.g
+        animate={reducedMotion ? undefined : { y: [0, -2, 0] }}
         transition={{ duration: 1.6, repeat: Infinity }}
       >
-        <div className="h-7 w-7 rounded-full bg-string flex items-center justify-center shadow-lg">
-          <Search size={13} className="text-bg" strokeWidth={2.5} />
-        </div>
-      </motion.div>
-    </div>
+        <circle cx="90" cy="82" r="8" className="fill-faint/60" />
+        <rect x="80" y="90" width="20" height="18" rx="8" className="fill-faint/25" />
+      </motion.g>
+
+      <circle cx="145" cy="42" r="13" className="fill-ink/90" />
+      <rect x="129" y="54" width="32" height="42" rx="14" className="fill-string/85" />
+      <motion.rect
+        x="102" y="58" width="26" height="7" rx="3" className="fill-ink/70"
+        animate={reducedMotion ? undefined : { x: [102, 98, 102] }}
+        transition={{ duration: 1.4, repeat: Infinity }}
+      />
+    </svg>
   )
 }
 
-function SceneSync() {
+function SceneStakeholders({ reducedMotion }: { reducedMotion: boolean | null }) {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {[0, 1, 2, 3].map((i) => (
-        <div
-          key={i}
-          className="relative h-14 w-14 rounded-md bg-surface2 border border-border/70 flex items-center justify-center"
-        >
-          <User size={16} className="text-faint" />
-          {i === 0 && (
-            <motion.span
-              className="absolute inset-0 rounded-md border-2 border-success"
-              animate={{ opacity: [0.25, 0.9, 0.25] }}
-              transition={{ duration: 1.4, repeat: Infinity }}
-            />
-          )}
-        </div>
+    <svg viewBox={VB} className="w-full max-w-[240px] h-auto">
+      <rect x="118" y="14" width="62" height="42" rx="4" className="fill-surface2 stroke-border" strokeWidth={1.5} />
+      <motion.path
+        d="M 126 46 L 138 40 L 150 43 L 162 28 L 172 20"
+        fill="none"
+        className="stroke-success"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={{ pathLength: reducedMotion ? 1 : 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 1.6, ease: 'easeInOut' }}
+      />
+
+      <circle cx="148" cy="72" r="13" className="fill-ink/90" />
+      <rect x="132" y="84" width="32" height="40" rx="14" className="fill-string/85" />
+      <motion.rect
+        x="126" y="88" width="22" height="7" rx="3" className="fill-ink/70"
+        animate={reducedMotion ? undefined : { y: [88, 83, 88] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      />
+
+      <rect x="20" y="112" width="160" height="8" rx="4" className="fill-border/50" />
+      {[40, 68, 96].map((cx) => (
+        <g key={cx}>
+          <circle cx={cx} cy="96" r="7" className="fill-faint/55" />
+          <rect x={cx - 9} y="103" width="18" height="16" rx="7" className="fill-faint/25" />
+        </g>
       ))}
-    </div>
+    </svg>
   )
 }
 
-function SceneRoadmap() {
-  return (
-    <div className="w-52">
-      <div className="relative h-1 rounded-full bg-border">
-        <motion.div
-          className="absolute inset-y-0 left-0 rounded-full bg-keyword"
-          initial={{ width: '8%' }}
-          animate={{ width: '62%' }}
-          transition={{ duration: 1.8, ease: 'easeOut' }}
-        />
-      </div>
-      <div className="flex justify-between mt-3">
-        {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="flex flex-col items-center gap-1.5">
-            <span className={`h-1.5 w-1.5 rounded-full ${i <= 1 ? 'bg-keyword' : 'bg-border'}`} />
-            <span
-              className={`h-8 w-8 rounded border ${
-                i === 1 ? 'border-string bg-string/10' : 'border-border bg-surface2'
-              }`}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function SceneShip() {
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <motion.div
-        className="h-12 w-12 rounded-full bg-success/15 border border-success flex items-center justify-center"
-        initial={{ scale: 0.7, rotate: -15 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ type: 'spring', stiffness: 220, damping: 14 }}
-      >
-        <Check size={20} className="text-success" strokeWidth={2.5} />
-      </motion.div>
-      <span className="font-mono text-[11px] uppercase tracking-wider text-success border border-success/40 rounded-full px-3 py-1">
-        Shipped
-      </span>
-    </div>
-  )
-}
-
-const scenes = [
-  { label: 'Reviewing research', render: <SceneResearch /> },
-  { label: 'Cross-functional sync', render: <SceneSync /> },
-  { label: 'Roadmap review', render: <SceneRoadmap /> },
-  { label: 'Shipped', render: <SceneShip /> },
+const sceneList = [
+  { label: 'Researching', Scene: SceneResearch },
+  { label: 'Client call', Scene: SceneClientCall },
+  { label: 'Team sync — roadmap', Scene: SceneTeamSync },
+  { label: 'Stakeholder update', Scene: SceneStakeholders },
 ]
 
 export default function DayInLife() {
@@ -126,10 +169,12 @@ export default function DayInLife() {
   useEffect(() => {
     if (reducedMotion) return
     const id = window.setInterval(() => {
-      setActive((a) => (a + 1) % scenes.length)
-    }, 3200)
+      setActive((a) => (a + 1) % sceneList.length)
+    }, 3600)
     return () => window.clearInterval(id)
   }, [reducedMotion])
+
+  const Active = sceneList[active].Scene
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -147,15 +192,16 @@ export default function DayInLife() {
               animate={{ opacity: 1, y: 0 }}
               exit={reducedMotion ? undefined : { opacity: 0, y: -8 }}
               transition={{ duration: 0.5 }}
+              className="w-full flex items-center justify-center"
             >
-              {scenes[active].render}
+              <Active reducedMotion={reducedMotion} />
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
 
       <div className="flex items-center justify-center gap-2 mt-5">
-        {scenes.map((_, i) => (
+        {sceneList.map((_, i) => (
           <span
             key={i}
             className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -174,7 +220,7 @@ export default function DayInLife() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {scenes[active].label}
+            {sceneList[active].label}
           </motion.span>
         </AnimatePresence>
       </p>
