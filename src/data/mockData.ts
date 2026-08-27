@@ -5,7 +5,7 @@
 
 export const profile = {
   name: 'Jordan Ellery',
-  role: 'Full-Stack Developer',
+  role: 'AI Product Manager',
   tagline: 'I build fast, well-considered software.',
   location: 'Bengaluru, India',
   status: 'Open to opportunities',
@@ -17,7 +17,7 @@ export const profile = {
     x: 'https://x.com',
   },
   bioShort:
-    "Software engineer focused on shipping products end-to-end — from data model to deployed UI. I care more about whether something works under real conditions than whether the demo looks nice.",
+    "I turn messy problems into shipped products — the person in the room translating between research, design, engineering, and whoever's footing the bill.",
   bioLong:
     "I got into programming by taking things apart to see how they worked, which is still basically what I do for a living. Most of my time goes into small teams shipping real products: figuring out the right data model before writing a line of UI, choosing boring technology when boring is correct, and being honest when a clever solution isn't worth its complexity. I've spent the last two years working across the stack — Python and TypeScript day to day — on tools that touch healthcare workflows, developer tooling, and a couple of things I built purely because I was curious whether they'd work.",
 }
@@ -132,12 +132,3 @@ export const projects = [
 
 export const projectCategories = ['All', 'Healthcare AI', 'Developer Tools', 'AI Tools', 'Utility', 'Games']
 
-// Self-reported summary stats for the hero panel — plain facts, not a
-// live data feed. Keep it that way: don't dress this up as pulled-from-an-API.
-export const stats = {
-  projects_shipped: projects.length,
-  years_writing_code: 3,
-  focus: ['Healthcare AI', 'Developer Tools'],
-  currently: 'Triage Copilot v2',
-  based_in: 'Bengaluru, IN',
-}
