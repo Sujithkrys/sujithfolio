@@ -4,10 +4,10 @@ import { Github, Linkedin, Twitter, Menu, X } from 'lucide-react'
 import { profile } from '../data/mockData'
 
 const tabs = [
-  { to: '/', label: 'home.tsx' },
-  { to: '/about', label: 'about.tsx' },
-  { to: '/projects', label: 'projects.tsx' },
-  { to: '/skills', label: 'skills.tsx' },
+  { to: '/', label: 'home' },
+  { to: '/about', label: 'about' },
+  { to: '/projects', label: 'projects' },
+  { to: '/skills', label: 'skills' },
 ]
 
 export default function Nav() {

@@ -2,16 +2,16 @@ import { useLocation } from 'react-router-dom'
 import { profile } from '../data/mockData'
 
 const routeNames: Record<string, string> = {
-  '/': 'home.tsx',
-  '/about': 'about.tsx',
-  '/projects': 'projects.tsx',
-  '/skills': 'skills.tsx',
-  '/contact': 'contact.tsx',
+  '/': 'home',
+  '/about': 'about',
+  '/projects': 'projects',
+  '/skills': 'skills',
+  '/contact': 'contact',
 }
 
 export default function StatusBar() {
   const { pathname } = useLocation()
-  const file = routeNames[pathname] ?? 'home.tsx'
+  const file = routeNames[pathname] ?? 'home'
 
   return (
     <footer className="fixed bottom-0 left-0 right-0 z-40 h-9 border-t border-border bg-surface/95 backdrop-blur">
